@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <SelfContained>true</SelfContained>
+    <PublishSingleFile>true</PublishSingleFile>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+    <PublishTrimmed>false</PublishTrimmed>
+
+    <SubscriptionsSource>$(MSBuildProjectDirectory)\..\..\subscriptions\subscriptions.txt</SubscriptionsSource>
+    <SubscriptionsEncrypted>$(MSBuildProjectDirectory)\Generated\subscriptions.enc</SubscriptionsEncrypted>
+    <BuildSecretsCode>$(MSBuildProjectDirectory)\Generated\BuildSecrets.g.cs</BuildSecretsCode>
+    <SubscriptionsKey>CorpVPN-Minimum-Obfuscation-Key-Change-Me</SubscriptionsKey>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Generated\subscriptions.enc" LogicalName="CorpVPN.Client.Assets.subscriptions.enc" />
+  </ItemGroup>
+
+  <Target Name="PrepareEncryptedSubscriptions" BeforeTargets="BeforeBuild">
+    <MakeDir Directories="$(MSBuildProjectDirectory)\Generated" />
+    <Exec Command="powershell -NoProfile -ExecutionPolicy Bypass -File &quot;$(MSBuildProjectDirectory)\..\..\scripts\Encrypt-Subscriptions.ps1&quot; -InputPath &quot;$(SubscriptionsSource)&quot; -OutputPath &quot;$(SubscriptionsEncrypted)&quot; -CodePath &quot;$(BuildSecretsCode)&quot; -Key &quot;$(SubscriptionsKey)&quot;" />
+  </Target>
+</Project>

@@ -1,0 +1,3 @@
+﻿{
+  "vless_uri": "vless://UUID@server:443?encryption=none&security=reality&sni=example.com&fp=chrome&pbk=PUBLIC_KEY&type=tcp#MyServer"
+}

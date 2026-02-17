@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+runtime/*.log
+runtime/active-config.json
+config/state.json
+
+bin/
+obj/
+artifacts/
+src/CorpVPN.Client/Generated/*.enc
+src/CorpVPN.Client/Generated/BuildSecrets.g.cs
