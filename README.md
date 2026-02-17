@@ -43,6 +43,24 @@ Sign installer:
 powershell -ExecutionPolicy Bypass -File .\build\Sign.ps1 -File .\artifacts\installer\CorpVPN-Setup.exe -PfxPath C:\certs\code.pfx -PfxPassword "your-password"
 ```
 
+## GitHub Actions CI/CD
+
+Workflow file:
+- `.github/workflows/release.yml`
+
+Triggers:
+- push tag `v*` (creates draft GitHub Release)
+- manual run (`workflow_dispatch`)
+
+Repository secrets for signing (optional):
+- `SIGN_PFX_BASE64`
+- `SIGN_PFX_PASSWORD`
+- `TIMESTAMP_URL` (optional; defaults to DigiCert timestamp URL)
+
+If signing secrets are not set:
+- build and installer jobs still run
+- release uses unsigned installer artifact
+
 ## Runtime prerequisites
 
 - Put xray core binary here: `artifacts/publish/core/xray.exe` for portable tests.
